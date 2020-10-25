@@ -6,8 +6,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from './components/HomeScreen';
 // import DetailScreen from './components/DetailScreen';
 import FeedScreen from './components/FeedScreen';
-// import ProfileScreen from './components/ProfileScreen';
-// import ProfileEditScreen from './components/ProfileEditScreen';
+import ProfileScreen from './components/ProfileScreen';
+import ProfileEditScreen from './components/ProfileEditScreen';
 
 const HomeStack = createStackNavigator(
   {
@@ -31,10 +31,25 @@ const FeedStack = createStackNavigator(
   }
 );
 
+const ProfileStack = createStackNavigator(
+  {
+    Profile: {
+      screen: ProfileScreen,
+    },
+    Edit: {
+      screen: ProfileEditScreen,
+    },
+  },
+  {
+    initialRouteName: 'Profile',
+  }
+);
+
 const TabNavigator = createBottomTabNavigator(
   {
     Home: HomeStack,
     Feed: FeedStack,
+    Profile: ProfileStack,
   },
   {
     tabBarOptions: {
