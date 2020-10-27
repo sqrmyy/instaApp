@@ -3,11 +3,11 @@
 // import { Icon } from 'expo';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import HomeScreen from './components/HomeScreen';
+import HomeScreen from './containers/HomeScreen';
 // import DetailScreen from './components/DetailScreen';
-import FeedScreen from './components/FeedScreen';
-import ProfileScreen from './components/ProfileScreen';
-import ProfileEditScreen from './components/ProfileEditScreen';
+import FeedScreen from './containers/FeedScreen';
+import ProfileScreen from './containers/ProfileScreen';
+import ProfileEditScreen from './containers/ProfileEditScreen';
 
 const HomeStack = createStackNavigator(
   {

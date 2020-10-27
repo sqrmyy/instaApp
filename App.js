@@ -5,13 +5,19 @@ import { createAppContainer } from 'react-navigation';
 // import { createStackNavigator } from 'react-navigation-stack';
 // import { createDrawerNavigator } from 'react-navigation-drawer';
 import AppNavigator from './AppNavigator';
+import configureStore from './configureStore';
+
+const store = configureStore();
 
 const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {
   render() {
-    //AppContainerでラップ
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }
 
