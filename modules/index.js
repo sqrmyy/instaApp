@@ -2,8 +2,18 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-import { config, FACEBOOK_APPID } from './config';
 import * as Expo from 'expo';
+
+const FACEBOOK_APPID = '<app id>';
+
+const config = {
+  apiKey: '<api key>',
+  authDomain: '<domain>',
+  databaseURL: '<database url>',
+  projectId: '<project id>',
+  storageBucket: '<sotarge bucket>',
+  messagingSenderId: '<id>',
+};
 
 firebase.initializeApp(config);
 
