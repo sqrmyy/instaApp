@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 // import ProfileScreen from './containers/ProfileScreen';
 // import ProfileEditScreen from './containers/ProfileEditScreen';
 import HomeScreen from './components/HomeScreen';
-// import DetailScreen from './components/DetailScreen';
+import DetailScreen from './components/DetailScreen';
 import FeedScreen from './components/FeedScreen';
 import ProfileScreen from './components/ProfileScreen';
 import ProfileEditScreen from './components/ProfileEditScreen';
@@ -19,9 +19,9 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: HomeScreen,
     },
-    // Detail: {
-    //   screen: DetailScreen,
-    // },
+    Detail: {
+      screen: DetailScreen,
+    },
   },
   {
     initialRouteName: 'Home',
@@ -43,9 +43,9 @@ const FeedStack = createStackNavigator(
     Feed: {
       screen: FeedScreen,
     },
-    // Detail: {
-    //   screen: DetailScreen,
-    // },
+    Detail: {
+      screen: DetailScreen,
+    },
   },
   {
     initialRouteName: 'Feed',

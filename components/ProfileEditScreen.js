@@ -57,6 +57,19 @@ class ProfileEditScreen extends Component {
     try {
       this.setState({ uploading: true });
 
+      // let downloadUrl = null;
+      // if (this.state.avatar) {
+      //   downloadUrl = await uploadAvatar(this.state.avatar);
+      // }
+
+      // const batch = db.batch();
+      // const userRef = userCollection.doc(this.props.user.uid);
+
+      // await batch.set(userRef, { name: properties.name, avatar: downloadUrl });
+      // await batch.commit().then(() => {
+      //   console.log('edit user success.');
+      // });
+
       this.setState({
         name: null,
         avatar: null,
@@ -72,6 +85,7 @@ class ProfileEditScreen extends Component {
   };
 
   render() {
+    // if (this.props.user.uid) {
     const tempAvatar =
       'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
 
@@ -79,10 +93,16 @@ class ProfileEditScreen extends Component {
       <Container style={styles.container}>
         <Header transparent>
           <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.goBack()}
-            ></Button>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              {/* <Icon.Ionicons
+                  name={
+                    Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
+                  }
+                  size={24}
+                  style={styles.backButton}
+                  color='black'
+                /> */}
+            </Button>
           </Left>
         </Header>
 
@@ -101,10 +121,29 @@ class ProfileEditScreen extends Component {
                 large
                 source={{
                   uri: tempAvatar,
+                  // uri: this.props.user.properties.avatar
+                  //   ? this.props.user.properties.avatar
+                  //   : tempAvatar,
                 }}
                 style={styles.avatar}
               />
             )}
+
+            {/* <Badge style={styles.iconButton}>
+                <Icon.AntDesign
+                  name='plus'
+                  size={50}
+                  color='white'
+                  onPress={this.pickImage}
+                />
+              </Badge>
+
+              <Item style={styles.name} rounded>
+                <Input
+                  placeholder={this.props.user.properties.name}
+                  onChangeText={(name) => this.setState({ name })}
+                />
+              </Item> */}
 
             <Button
               style={styles.button}
@@ -119,6 +158,13 @@ class ProfileEditScreen extends Component {
         </Content>
       </Container>
     );
+    // } else {
+    //   return (
+    //     <View style={styles.notLoginContainer}>
+    //       <Text>Error</Text>
+    //     </View>
+    //   );
+    // }
   }
 }
 

@@ -9,6 +9,14 @@ import {
   Textarea,
 } from 'native-base';
 // import { Icon, Permissions, ImagePicker } from 'expo';
+// import {
+//   getNewFeedDoc,
+//   uploadFeedImage,
+//   getUid,
+//   getNowDate,
+//   authFacebook,
+//   db,
+// } from '../modules/firebase';
 
 class FeedScreen extends Component {
   constructor(props) {
@@ -24,14 +32,64 @@ class FeedScreen extends Component {
     title: 'Instagram',
   });
 
+  // pickImage = async () => {
+  //   const isAccepted = true;
+
+  //   const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+
+  //   if (permission.status !== 'granted') {
+  //     const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  //     if (newPermission.status !== 'granted') {
+  //       isAccepted = false;
+  //     }
+  //   }
+
+  //   if (isAccepted) {
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       allowsEditing: true,
+  //       aspect: [9, 9],
+  //     });
+
+  //     if (!result.cancelled) {
+  //       this.setState({ image: result.uri });
+  //       console.log(result.uri);
+  //     }
+  //   }
+  // };
+
   postFeed = async (properties) => {
     try {
       this.setState({ uploading: true });
       alert('投稿しました');
+      // TODO DELETE　↑
+      // const feedRef = getNewFeedDoc();
+      // const uuid = feedRef.id;
+
+      // let downloadUrl = null;
+      // if (this.state.image) {
+      //   downloadUrl = await uploadFeedImage(this.state.image, uuid);
+      // }
+
+      // const { uid } = getUid();
+
+      // const batch = db.batch();
+
+      // await batch.set(feedRef, {
+      //   message: properties.message,
+      //   image: downloadUrl,
+      //   writer: uid,
+      //   created_at: getNowDate(),
+      //   updated_at: getNowDate(),
+      // });
+      // await batch.commit().then(() => {
+      //   console.log('post feed success.');
+      // });
+
       this.setState({
         message: null,
         image: null,
       });
+      // this.props.navigation.navigate('Detail', { uuid });
     } catch (e) {
       console.log(e);
     } finally {
@@ -40,6 +98,7 @@ class FeedScreen extends Component {
   };
 
   render() {
+    // if (this.props.user.uid) {
     return (
       <Container style={styles.container}>
         <Content>
@@ -53,6 +112,15 @@ class FeedScreen extends Component {
                   style={styles.image}
                 />
               ) : null}
+
+              {/* <Badge style={styles.iconButton}>
+                  <Icon.AntDesign
+                    name='plus'
+                    size={50}
+                    color='white'
+                    onPress={this.pickImage}
+                  />
+                </Badge> */}
             </View>
 
             <View style={styles.textSection}>
@@ -78,6 +146,20 @@ class FeedScreen extends Component {
         </Content>
       </Container>
     );
+    // } else {
+    //   return (
+    //     <View style={styles.notLoginContainer}>
+    //       <Button
+    //         style={styles.loginButton}
+    //         dark
+    //         rounded
+    //         onPress={authFacebook}
+    //       >
+    //         <Text style={styles.buttonText}>Login with Facebook</Text>
+    //       </Button>
+    //     </View>
+    //   );
+    // }
   }
 }
 

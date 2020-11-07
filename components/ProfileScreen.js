@@ -8,7 +8,37 @@ class ProfileScreen extends Component {
     title: 'Instagram',
   });
 
+  // componentWillMount() {
+  //   this.unsubscribe = userCollection
+  //     .doc(this.props.user.uid || '_')
+  //     .onSnapshot((doc) => {
+  //       const properties = doc.data();
+  //       if (properties) {
+  //         this.props.handleSetUserProperties(
+  //           Object.assign(
+  //             {
+  //               avatar: null,
+  //               name: null,
+  //             },
+  //             properties
+  //           )
+  //         );
+  //       } else {
+  //         this.props.handleSetUserProperties({
+  //           avatar: null,
+  //           name: null,
+  //         });
+  //       }
+  //       console.log(properties);
+  //     });
+  // }
+
+  // componentWillUnmount() {
+  //   this.unsubscribe();
+  // }
+
   render() {
+    // if (this.props.user.uid) {
     const tempAvatar =
       'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
 
@@ -22,10 +52,18 @@ class ProfileScreen extends Component {
                   large
                   source={{
                     uri: tempAvatar,
+                    // uri: this.props.user.properties.avatar
+                    //   ? this.props.user.properties.avatar
+                    // : tempAvatar,
                   }}
                   style={styles.avatar}
                 />
                 <Text style={styles.name}>{'未設定'}</Text>
+                {/* <Text style={styles.name}>
+                  {this.props.user.properties.name
+                    ? this.props.user.properties.name
+                    : '未設定'}
+                </Text> */}
               </View>
               <Button
                 style={styles.editButton}
@@ -44,6 +82,20 @@ class ProfileScreen extends Component {
         </Content>
       </Container>
     );
+    // } else {
+    //   return (
+    //     <View style={styles.notLoginContainer}>
+    //       <Button
+    //         style={styles.loginButton}
+    //         dark
+    //         rounded
+    //         onPress={authFacebook}
+    //       >
+    //         <Text style={styles.buttonText}>Login with Facebook</Text>
+    //       </Button>
+    //     </View>
+    //   );
+    // }
   }
 }
 
