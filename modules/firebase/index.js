@@ -33,12 +33,12 @@ export const getUid = () => {
 
 export const authFacebook = async () => {
   try {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      FACEBOOK_APPID,
-      {
-        permissions: ['public_profile'],
-      }
-    );
+    const {
+      type,
+      token,
+    } = await Expo.Facebook.logInWithReadPermissionsAsync(FACEBOOK_APPID, {
+      permissions: ['public_profile'],
+    });
 
     if (type === 'success') {
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
