@@ -13,7 +13,7 @@ import {
 } from 'native-base';
 import { Icon, Permissions, ImagePicker } from 'expo';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-// import { userCollection, uploadAvatar, db } from '../modules/firebase';
+import { userCollection, uploadAvatar, db } from '../modules/firebase';
 
 class ProfileEditScreen extends Component {
   constructor(props) {
@@ -58,18 +58,18 @@ class ProfileEditScreen extends Component {
     try {
       this.setState({ uploading: true });
 
-      // let downloadUrl = null;
-      // if (this.state.avatar) {
-      //   downloadUrl = await uploadAvatar(this.state.avatar);
-      // }
+      let downloadUrl = null;
+      if (this.state.avatar) {
+        downloadUrl = await uploadAvatar(this.state.avatar);
+      }
 
-      // const batch = db.batch();
-      // const userRef = userCollection.doc(this.props.user.uid);
+      const batch = db.batch();
+      const userRef = userCollection.doc(this.props.user.uid);
 
-      // await batch.set(userRef, { name: properties.name, avatar: downloadUrl });
-      // await batch.commit().then(() => {
-      //   console.log('edit user success.');
-      // });
+      await batch.set(userRef, { name: properties.name, avatar: downloadUrl });
+      await batch.commit().then(() => {
+        console.log('edit user success.');
+      });
 
       this.setState({
         name: null,
@@ -86,86 +86,89 @@ class ProfileEditScreen extends Component {
   };
 
   render() {
-    // if (this.props.user.uid) {
-    const tempAvatar =
-      'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
+    if (this.props.user.uid) {
+      const tempAvatar =
+        'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
 
-    return (
-      <Container style={styles.container}>
-        <Header transparent>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Ionicons
-                name={
-                  Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
-                }
-                size={24}
-                style={styles.backButton}
-                color='black'
-              />
-            </Button>
-          </Left>
-        </Header>
+      return (
+        <Container style={styles.container}>
+          <Header transparent>
+            <Left>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.goBack()}
+              >
+                <Ionicons
+                  name={
+                    Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
+                  }
+                  size={24}
+                  style={styles.backButton}
+                  color='black'
+                />
+              </Button>
+            </Left>
+          </Header>
 
-        <Content>
-          <View style={styles.content}>
-            {this.state.avatar ? (
-              <Thumbnail
-                large
-                source={{
-                  uri: this.state.avatar ? this.state.avatar : tempAvatar,
-                }}
-                style={styles.avatar}
-              />
-            ) : (
-              <Thumbnail
-                large
-                source={{
-                  uri: tempAvatar,
-                  // uri: this.props.user.properties.avatar
-                  //   ? this.props.user.properties.avatar
-                  //   : tempAvatar,
-                }}
-                style={styles.avatar}
-              />
-            )}
+          <Content>
+            <View style={styles.content}>
+              {this.state.avatar ? (
+                <Thumbnail
+                  large
+                  source={{
+                    uri: this.state.avatar ? this.state.avatar : tempAvatar,
+                  }}
+                  style={styles.avatar}
+                />
+              ) : (
+                <Thumbnail
+                  large
+                  source={{
+                    // uri: tempAvatar,
+                    uri: this.props.user.properties.avatar
+                      ? this.props.user.properties.avatar
+                      : tempAvatar,
+                  }}
+                  style={styles.avatar}
+                />
+              )}
 
-            <Badge style={styles.iconButton}>
-              <AntDesign
-                name='plus'
-                size={50}
-                color='white'
-                onPress={this.pickImage}
-              />
-            </Badge>
+              <Badge style={styles.iconButton}>
+                <AntDesign
+                  name='plus'
+                  size={50}
+                  color='white'
+                  onPress={this.pickImage}
+                />
+              </Badge>
 
-            <Item style={styles.name} rounded>
-              <Input
-                placeholder={this.props.user.properties.name}
-                onChangeText={(name) => this.setState({ name })}
-              />
-            </Item>
+              <Item style={styles.name} rounded>
+                <Input
+                  placeholder={this.props.user.properties.name}
+                  onChangeText={(name) => this.setState({ name })}
+                />
+              </Item>
 
-            <Button
-              style={styles.button}
-              dark
-              rounded
-              onPress={() => this.updateProfile(this.state)}
-              disabled={this.state.uploading}
-            >
-              <Text style={styles.buttonText}>プロフィールを保存</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
-    );
-    // } else {
-    //   return (
-    //     <View style={styles.notLoginContainer}>
-    //       <Text>Error</Text>
-    //     </View>
-    //   );
-    // }
+              <Button
+                style={styles.button}
+                dark
+                rounded
+                onPress={() => this.updateProfile(this.state)}
+                disabled={this.state.uploading}
+              >
+                <Text style={styles.buttonText}>プロフィールを保存</Text>
+              </Button>
+            </View>
+          </Content>
+        </Container>
+      );
+    } else {
+      return (
+        <View style={styles.notLoginContainer}>
+          <Text>Error</Text>
+        </View>
+      );
+    }
   }
 }
 

@@ -17,78 +17,78 @@ class HomeScreen extends Component {
     title: 'Instagram',
   });
 
-  // componentWillMount() {
-  //   this.unsubscribe = feedCollection
-  //     .orderBy('created_at')
-  //     .onSnapshot((querySnapshot) => {
-  //       const feeds = [];
-  //       querySnapshot.forEach((doc) => {
-  //         feeds.push({ uuid: doc.id, ...doc.data() });
-  //       });
-  //       feeds.reverse();
-  //       this.setState({ feeds });
-  //     });
-  // }
+  componentWillMount() {
+    this.unsubscribe = feedCollection
+      .orderBy('created_at')
+      .onSnapshot((querySnapshot) => {
+        const feeds = [];
+        querySnapshot.forEach((doc) => {
+          feeds.push({ uuid: doc.id, ...doc.data() });
+        });
+        feeds.reverse();
+        this.setState({ feeds });
+      });
+  }
 
-  // componentWillUnmount() {
-  //   this.unsubscribe();
-  // }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
     return (
-      // <Container style={styles.container}>
-      //   <Content>
-      //     {this.state.feeds &&
-      //       this.state.feeds.map((element) => {
-      //         let date;
-      //         try {
-      //           date = moment
-      //             .unix(element.created_at.seconds)
-      //             .format('YYYY/MM/DD HH:mm:ss');
-      //         } catch (e) {
-      //           console.log(e);
-      //           date = '投稿日不明';
-      //         }
+      <Container style={styles.container}>
+        <Content>
+          {this.state.feeds &&
+            this.state.feeds.map((element) => {
+              let date;
+              try {
+                date = moment
+                  .unix(element.created_at.seconds)
+                  .format('YYYY/MM/DD HH:mm:ss');
+              } catch (e) {
+                console.log(e);
+                date = '投稿日不明';
+              }
 
-      //         return (
-      //           <Card style={styles.card} key={element.uuid}>
-      //             <CardItem
-      //               cardBody
-      //               button
-      //               onPress={() =>
-      //                 this.props.navigation.navigate('Detail', {
-      //                   uuid: element.uuid,
-      //                 })
-      //               }
-      //             >
-      //               <Image
-      //                 style={styles.image}
-      //                 source={{ uri: element.image }}
-      //               />
-      //             </CardItem>
-      //             <CardItem
-      //               style={styles.inner}
-      //               button
-      //               onPress={() =>
-      //                 this.props.navigation.navigate('Detail', {
-      //                   uuid: element.uuid,
-      //                 })
-      //               }
-      //             >
-      //               <Body>
-      //                 <Text>{element.message}</Text>
-      //                 <Text style={styles.date}>{date}</Text>
-      //               </Body>
-      //             </CardItem>
-      //           </Card>
-      //         );
-      //       })}
-      //   </Content>
-      // </Container>
+              return (
+                <Card style={styles.card} key={element.uuid}>
+                  <CardItem
+                    cardBody
+                    button
+                    onPress={() =>
+                      this.props.navigation.navigate('Detail', {
+                        uuid: element.uuid,
+                      })
+                    }
+                  >
+                    <Image
+                      style={styles.image}
+                      source={{ uri: element.image }}
+                    />
+                  </CardItem>
+                  <CardItem
+                    style={styles.inner}
+                    button
+                    onPress={() =>
+                      this.props.navigation.navigate('Detail', {
+                        uuid: element.uuid,
+                      })
+                    }
+                  >
+                    <Body>
+                      <Text>{element.message}</Text>
+                      <Text style={styles.date}>{date}</Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              );
+            })}
+        </Content>
+      </Container>
       // TODO DELETE ↓
-      <View style={styles.container}>
-        <Text>HomeScreen</Text>
-      </View>
+      // <View style={styles.container}>
+      //   <Text>HomeScreen</Text>
+      // </View>
     );
   }
 }
@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // TODO DELETE
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     //
   },
   content: {

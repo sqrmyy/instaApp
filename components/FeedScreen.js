@@ -8,16 +8,16 @@ import {
   Badge,
   Textarea,
 } from 'native-base';
-// import { Icon, Permissions, ImagePicker } from 'expo';
+import { Icon, Permissions, ImagePicker } from 'expo';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-// import {
-//   getNewFeedDoc,
-//   uploadFeedImage,
-//   getUid,
-//   getNowDate,
-//   authFacebook,
-//   db,
-// } from '../modules/firebase';
+import {
+  getNewFeedDoc,
+  uploadFeedImage,
+  getUid,
+  getNowDate,
+  authFacebook,
+  db,
+} from '../modules/firebase';
 
 class FeedScreen extends Component {
   constructor(props) {
@@ -33,64 +33,64 @@ class FeedScreen extends Component {
     title: 'Instagram',
   });
 
-  // pickImage = async () => {
-  //   const isAccepted = true;
+  pickImage = async () => {
+    const isAccepted = true;
 
-  //   const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+    const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
 
-  //   if (permission.status !== 'granted') {
-  //     const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  //     if (newPermission.status !== 'granted') {
-  //       isAccepted = false;
-  //     }
-  //   }
+    if (permission.status !== 'granted') {
+      const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (newPermission.status !== 'granted') {
+        isAccepted = false;
+      }
+    }
 
-  //   if (isAccepted) {
-  //     let result = await ImagePicker.launchImageLibraryAsync({
-  //       allowsEditing: true,
-  //       aspect: [9, 9],
-  //     });
+    if (isAccepted) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [9, 9],
+      });
 
-  //     if (!result.cancelled) {
-  //       this.setState({ image: result.uri });
-  //       console.log(result.uri);
-  //     }
-  //   }
-  // };
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+        console.log(result.uri);
+      }
+    }
+  };
 
   postFeed = async (properties) => {
     try {
       this.setState({ uploading: true });
-      alert('投稿しました');
+      // alert('投稿しました');
       // TODO DELETE　↑
-      // const feedRef = getNewFeedDoc();
-      // const uuid = feedRef.id;
+      const feedRef = getNewFeedDoc();
+      const uuid = feedRef.id;
 
-      // let downloadUrl = null;
-      // if (this.state.image) {
-      //   downloadUrl = await uploadFeedImage(this.state.image, uuid);
-      // }
+      let downloadUrl = null;
+      if (this.state.image) {
+        downloadUrl = await uploadFeedImage(this.state.image, uuid);
+      }
 
-      // const { uid } = getUid();
+      const { uid } = getUid();
 
-      // const batch = db.batch();
+      const batch = db.batch();
 
-      // await batch.set(feedRef, {
-      //   message: properties.message,
-      //   image: downloadUrl,
-      //   writer: uid,
-      //   created_at: getNowDate(),
-      //   updated_at: getNowDate(),
-      // });
-      // await batch.commit().then(() => {
-      //   console.log('post feed success.');
-      // });
+      await batch.set(feedRef, {
+        message: properties.message,
+        image: downloadUrl,
+        writer: uid,
+        created_at: getNowDate(),
+        updated_at: getNowDate(),
+      });
+      await batch.commit().then(() => {
+        console.log('post feed success.');
+      });
 
       this.setState({
         message: null,
         image: null,
       });
-      // this.props.navigation.navigate('Detail', { uuid });
+      this.props.navigation.navigate('Detail', { uuid });
     } catch (e) {
       console.log(e);
     } finally {
@@ -99,68 +99,68 @@ class FeedScreen extends Component {
   };
 
   render() {
-    // if (this.props.user.uid) {
-    return (
-      <Container style={styles.container}>
-        <Content>
-          <View style={styles.content}>
-            <View style={styles.imageSection}>
-              {this.state.image ? (
-                <Thumbnail
-                  large
-                  square
-                  source={{ uri: this.state.image }}
-                  style={styles.image}
+    if (this.props.user.uid) {
+      return (
+        <Container style={styles.container}>
+          <Content>
+            <View style={styles.content}>
+              <View style={styles.imageSection}>
+                {this.state.image ? (
+                  <Thumbnail
+                    large
+                    square
+                    source={{ uri: this.state.image }}
+                    style={styles.image}
+                  />
+                ) : null}
+
+                <Badge style={styles.iconButton}>
+                  <AntDesign
+                    name='plus'
+                    size={50}
+                    color='white'
+                    onPress={this.pickImage}
+                  />
+                </Badge>
+              </View>
+
+              <View style={styles.textSection}>
+                <Textarea
+                  style={styles.description}
+                  rowSpan={10}
+                  bordered
+                  placeholder='メッセージ'
+                  onChangeText={(message) => this.setState({ message })}
                 />
-              ) : null}
+              </View>
 
-              <Badge style={styles.iconButton}>
-                <AntDesign
-                  name='plus'
-                  size={50}
-                  color='white'
-                  onPress={this.pickImage}
-                />
-              </Badge>
+              <Button
+                style={styles.button}
+                dark
+                rounded
+                onPress={() => this.postFeed(this.state)}
+                disabled={this.state.uploading}
+              >
+                <Text style={styles.buttonText}>投稿</Text>
+              </Button>
             </View>
-
-            <View style={styles.textSection}>
-              <Textarea
-                style={styles.description}
-                rowSpan={10}
-                bordered
-                placeholder='メッセージ'
-                onChangeText={(message) => this.setState({ message })}
-              />
-            </View>
-
-            <Button
-              style={styles.button}
-              dark
-              rounded
-              onPress={() => this.postFeed(this.state)}
-              disabled={this.state.uploading}
-            >
-              <Text style={styles.buttonText}>投稿</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
-    );
-    // } else {
-    //   return (
-    //     <View style={styles.notLoginContainer}>
-    //       <Button
-    //         style={styles.loginButton}
-    //         dark
-    //         rounded
-    //         onPress={authFacebook}
-    //       >
-    //         <Text style={styles.buttonText}>Login with Facebook</Text>
-    //       </Button>
-    //     </View>
-    //   );
-    // }
+          </Content>
+        </Container>
+      );
+    } else {
+      return (
+        <View style={styles.notLoginContainer}>
+          <Button
+            style={styles.loginButton}
+            dark
+            rounded
+            onPress={authFacebook}
+          >
+            <Text style={styles.buttonText}>Login with Facebook</Text>
+          </Button>
+        </View>
+      );
+    }
   }
 }
 
