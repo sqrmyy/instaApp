@@ -85,6 +85,7 @@ class HomeScreen extends Component {
       //       })}
       //   </Content>
       // </Container>
+      // TODO DELETE ↓
       <View style={styles.container}>
         <Text>HomeScreen</Text>
       </View>
