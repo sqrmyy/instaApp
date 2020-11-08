@@ -12,6 +12,7 @@ import {
   Badge,
 } from 'native-base';
 import { Icon, Permissions, ImagePicker } from 'expo';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 // import { userCollection, uploadAvatar, db } from '../modules/firebase';
 
 class ProfileEditScreen extends Component {
@@ -94,14 +95,14 @@ class ProfileEditScreen extends Component {
         <Header transparent>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              {/* <Icon.Ionicons
-                  name={
-                    Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
-                  }
-                  size={24}
-                  style={styles.backButton}
-                  color='black'
-                /> */}
+              <Ionicons
+                name={
+                  Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
+                }
+                size={24}
+                style={styles.backButton}
+                color='black'
+              />
             </Button>
           </Left>
         </Header>
@@ -129,21 +130,21 @@ class ProfileEditScreen extends Component {
               />
             )}
 
-            {/* <Badge style={styles.iconButton}>
-                <Icon.AntDesign
-                  name='plus'
-                  size={50}
-                  color='white'
-                  onPress={this.pickImage}
-                />
-              </Badge>
+            <Badge style={styles.iconButton}>
+              <AntDesign
+                name='plus'
+                size={50}
+                color='white'
+                onPress={this.pickImage}
+              />
+            </Badge>
 
-              <Item style={styles.name} rounded>
-                <Input
-                  placeholder={this.props.user.properties.name}
-                  onChangeText={(name) => this.setState({ name })}
-                />
-              </Item> */}
+            <Item style={styles.name} rounded>
+              <Input
+                placeholder={this.props.user.properties.name}
+                onChangeText={(name) => this.setState({ name })}
+              />
+            </Item>
 
             <Button
               style={styles.button}

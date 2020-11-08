@@ -9,6 +9,7 @@ import {
   Textarea,
 } from 'native-base';
 // import { Icon, Permissions, ImagePicker } from 'expo';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 // import {
 //   getNewFeedDoc,
 //   uploadFeedImage,
@@ -113,14 +114,14 @@ class FeedScreen extends Component {
                 />
               ) : null}
 
-              {/* <Badge style={styles.iconButton}>
-                  <Icon.AntDesign
-                    name='plus'
-                    size={50}
-                    color='white'
-                    onPress={this.pickImage}
-                  />
-                </Badge> */}
+              <Badge style={styles.iconButton}>
+                <AntDesign
+                  name='plus'
+                  size={50}
+                  color='white'
+                  onPress={this.pickImage}
+                />
+              </Badge>
             </View>
 
             <View style={styles.textSection}>

@@ -16,7 +16,7 @@ import {
   Thumbnail,
 } from 'native-base';
 import moment from 'moment-timezone';
-import { Icon } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
 import { feedCollection, userCollection } from '../modules/firebase';
 
 class DetailScreen extends Component {
@@ -106,7 +106,7 @@ class DetailScreen extends Component {
         <Header transparent>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon.Ionicons
+              <Ionicons
                 name={
                   Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'
                 }
