@@ -1,101 +1,101 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { Container, Content, Thumbnail, Button } from 'native-base';
-// import { authFacebook, logout, userCollection } from '../modules/firebase';
+import { authFacebook, logout, userCollection } from '../modules/firebase';
 
 class ProfileScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Instagram',
   });
 
-  // componentWillMount() {
-  //   this.unsubscribe = userCollection
-  //     .doc(this.props.user.uid || '_')
-  //     .onSnapshot((doc) => {
-  //       const properties = doc.data();
-  //       if (properties) {
-  //         this.props.handleSetUserProperties(
-  //           Object.assign(
-  //             {
-  //               avatar: null,
-  //               name: null,
-  //             },
-  //             properties
-  //           )
-  //         );
-  //       } else {
-  //         this.props.handleSetUserProperties({
-  //           avatar: null,
-  //           name: null,
-  //         });
-  //       }
-  //       console.log(properties);
-  //     });
-  // }
+  componentWillMount() {
+    this.unsubscribe = userCollection
+      .doc(this.props.user.uid || '_')
+      .onSnapshot((doc) => {
+        const properties = doc.data();
+        if (properties) {
+          this.props.handleSetUserProperties(
+            Object.assign(
+              {
+                avatar: null,
+                name: null,
+              },
+              properties
+            )
+          );
+        } else {
+          this.props.handleSetUserProperties({
+            avatar: null,
+            name: null,
+          });
+        }
+        console.log(properties);
+      });
+  }
 
-  // componentWillUnmount() {
-  //   this.unsubscribe();
-  // }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
-    // if (this.props.user.uid) {
-    const tempAvatar =
-      'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
+    if (this.props.user.uid) {
+      const tempAvatar =
+        'https://firebasestorage.googleapis.com/v0/b/novels-a5884.appspot.com/o/temp%2Ftemp.png?alt=media&token=a4d36af6-f5e8-49ad-b9c0-8b5d4d899c0d';
 
-    return (
-      <Container style={styles.container}>
-        <Content>
-          <View style={styles.content}>
-            <View style={styles.profileSection}>
-              <View style={styles.profileMain}>
-                <Thumbnail
-                  large
-                  source={{
-                    uri: tempAvatar,
-                    // uri: this.props.user.properties.avatar
-                    //   ? this.props.user.properties.avatar
-                    // : tempAvatar,
-                  }}
-                  style={styles.avatar}
-                />
-                <Text style={styles.name}>{'未設定'}</Text>
-                {/* <Text style={styles.name}>
-                  {this.props.user.properties.name
-                    ? this.props.user.properties.name
-                    : '未設定'}
-                </Text> */}
+      return (
+        <Container style={styles.container}>
+          <Content>
+            <View style={styles.content}>
+              <View style={styles.profileSection}>
+                <View style={styles.profileMain}>
+                  <Thumbnail
+                    large
+                    source={{
+                      // uri: tempAvatar,
+                      uri: this.props.user.properties.avatar
+                        ? this.props.user.properties.avatar
+                        : tempAvatar,
+                    }}
+                    style={styles.avatar}
+                  />
+                  {/* <Text style={styles.name}>{'未設定'}</Text> */}
+                  <Text style={styles.name}>
+                    {this.props.user.properties.name
+                      ? this.props.user.properties.name
+                      : '未設定'}
+                  </Text>
+                </View>
+                <Button
+                  style={styles.editButton}
+                  transparent
+                  dark
+                  onPress={() => this.props.navigation.navigate('Edit')}
+                >
+                  <Text style={styles.buttonText}>プロフィール編集</Text>
+                </Button>
+                {/* <Button style={styles.logoutButton} dark rounded onPress={logout}> */}
+                <Button style={styles.logoutButton}>
+                  <Text style={styles.buttonText}>ログアウト</Text>
+                </Button>
               </View>
-              <Button
-                style={styles.editButton}
-                transparent
-                dark
-                onPress={() => this.props.navigation.navigate('Edit')}
-              >
-                <Text style={styles.buttonText}>プロフィール編集</Text>
-              </Button>
-              {/* <Button style={styles.logoutButton} dark rounded onPress={logout}> */}
-              <Button style={styles.logoutButton}>
-                <Text style={styles.buttonText}>ログアウト</Text>
-              </Button>
             </View>
-          </View>
-        </Content>
-      </Container>
-    );
-    // } else {
-    //   return (
-    //     <View style={styles.notLoginContainer}>
-    //       <Button
-    //         style={styles.loginButton}
-    //         dark
-    //         rounded
-    //         onPress={authFacebook}
-    //       >
-    //         <Text style={styles.buttonText}>Login with Facebook</Text>
-    //       </Button>
-    //     </View>
-    //   );
-    // }
+          </Content>
+        </Container>
+      );
+    } else {
+      return (
+        <View style={styles.notLoginContainer}>
+          <Button
+            style={styles.loginButton}
+            dark
+            rounded
+            onPress={authFacebook}
+          >
+            <Text style={styles.buttonText}>Login with Facebook</Text>
+          </Button>
+        </View>
+      );
+    }
   }
 }
 
